@@ -36,7 +36,6 @@ if __name__ == '__main__':
         instances = ec2.instances.all()
         for i in instances:
             WA_MESSAGE = f"{WA_MESSAGE}{i.id} {i.state['Name']} {i.public_ip_address}\n"
-        # print(WA_MESSAGE)
         simple_send(WA_SRV, WA_PORT, WA_DESTINATION, WA_MESSAGE)
 
     elif action == 'public_ip':
