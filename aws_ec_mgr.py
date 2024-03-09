@@ -3,7 +3,6 @@ import argparse
 import sys
 import time
 import boto3
-from wa_hack_cli import simple_send
 
 if __name__ == '__main__':
 
@@ -16,11 +15,6 @@ if __name__ == '__main__':
     region = args.region
     instance_id = args.instance_id
 
-    WA_SRV = '192.168.123.38'
-    WA_PORT = 9009
-    WA_DESTINATION = '491717626871'
-    WA_MESSAGE = f'*AWS Status Overview* - {time.strftime("%d.%m.%Y %H:%M")}\n'
-
     ec2 = boto3.resource('ec2', region_name=region)
 
     if action == 'start':
@@ -32,12 +26,6 @@ if __name__ == '__main__':
     elif action in ['status', 'state']:
         instance = ec2.Instance(instance_id)
         print(instance.state['Name'])
-    elif action == 'list':
-        instances = ec2.instances.all()
-        for i in instances:
-            WA_MESSAGE = f"{WA_MESSAGE}{i.id} {i.state['Name']} {i.public_ip_address}\n"
-        simple_send(WA_SRV, WA_PORT, WA_DESTINATION, WA_MESSAGE)
-
     elif action == 'public_ip':
         instance = ec2.Instance(instance_id)
         print(instance.public_ip_address)
