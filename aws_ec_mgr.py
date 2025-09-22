@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """ helper to start and stop ec2 instances """
 import argparse
 import sys
@@ -7,6 +8,7 @@ import boto3
 try:
     from wa_hack_cli import simple_send
 except ImportError:
+
     def simple_send(srv, port, destination, message):
         print("Not supported")
 
@@ -26,7 +28,6 @@ if __name__ == "__main__":
     WA_PORT = 9009
     WA_DESTINATION = "491717626871"
     WA_MESSAGE = f'*AWS Status Overview* - {time.strftime("%d.%m.%Y %H:%M")}\n'
-
 
     ec2 = boto3.resource("ec2", region_name=region)
 
